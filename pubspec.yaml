@@ -17,13 +17,56 @@ dependencies:
   url_launcher: ^6.3.0
   # Premium fintech-style typography (Plus Jakarta Sans) — see buildPrimeTheme() in core/constants.dart.
   google_fonts: ^6.2.1
+  # Renders the official Prime Capital logo (assets/images/logo/*.svg) at
+  # true vector quality — sharp at any size/density, unlike a raster PNG.
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  # One-time generators (not shipped in the app) that turn the logo source
+  # images below into the real native app-icon and splash-screen assets.
+  # Run after `flutter pub get`:
+  #   dart run flutter_launcher_icons
+  #   dart run flutter_native_splash:create
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.1
 
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/images/logo/
+
+# App icon (home-screen launcher icon) — generated from the official brand
+# mark. iOS/legacy Android use a flattened navy-square source (App Store
+# icons can't have transparency); Android 8+ additionally gets a real
+# adaptive icon (transparent foreground mark over a navy background layer),
+# which is what makes the icon look right when the launcher masks it into a
+# circle/squircle/rounded-square depending on the device.
+flutter_launcher_icons:
+  image_path: "assets/images/logo/app_icon_source.png"
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  min_sdk_android: 21
+  adaptive_icon_background: "#131254"
+  adaptive_icon_foreground: "assets/images/logo/app_icon_foreground.png"
+
+# Native splash screen — shown natively while the Dart VM starts, before
+# `main()` even runs, so there is zero flash of a blank white screen. Navy
+# background + the blue brand mark, matching the app-icon treatment; the
+# in-app loading screen (see main.dart) uses the same colors so the
+# hand-off from native splash to the first Flutter frame is seamless.
+flutter_native_splash:
+  color: "#131254"
+  image: assets/images/logo/splash_mark.png
+  color_dark: "#131254"
+  image_dark: assets/images/logo/splash_mark.png
+  android_12:
+    image: assets/images/logo/splash_mark_android12.png
+    icon_background_color: "#131254"
+    image_dark: assets/images/logo/splash_mark_android12.png
+    icon_background_color_dark: "#131254"
+  web: false

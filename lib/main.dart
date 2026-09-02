@@ -5,6 +5,7 @@ import 'core/constants.dart';
 import 'core/i18n.dart';
 import 'core/session.dart';
 import 'screens/root_screen.dart';
+import 'widgets/prime_logo.dart';
 
 void main() {
   runApp(const PrimeCapitalApp());
@@ -37,10 +38,30 @@ class _PrimeCapitalAppState extends State<PrimeCapitalApp> {
   @override
   Widget build(BuildContext context) {
     if (!_ready) {
+      // Mirrors the native splash screen (navy background, brand mark) — see
+      // `flutter_native_splash` config in pubspec.yaml — so there is no
+      // color/logo flash when native splash hands off to this first Flutter
+      // frame while `_bootstrap()` restores the language/session.
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: buildPrimeTheme(),
-        home: const Scaffold(body: Center(child: CircularProgressIndicator())),
+        home: const Scaffold(
+          backgroundColor: PrimeColors.navy,
+          body: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                PrimeLogoLight(height: 130),
+                SizedBox(height: 40),
+                SizedBox(
+                  width: 26,
+                  height: 26,
+                  child: CircularProgressIndicator(strokeWidth: 2.6, color: Colors.white70),
+                ),
+              ],
+            ),
+          ),
+        ),
       );
     }
     return LangScope(

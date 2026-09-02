@@ -23,6 +23,12 @@ class PrimeColors {
   static const Color blueDeep = Color(0xFF0468C4);
   static const Color cyan = Color(0xFF17C3B2);
   static const Color ink = Color(0xFF0F172A);
+
+  /// The exact brand navy from the logo/brand kit (#131254) — distinct from
+  /// [ink], which is the app's body-text color. Used where the true brand
+  /// dark is needed: the splash/loading screen and the app-icon background,
+  /// matching the native app icon 1:1.
+  static const Color navy = Color(0xFF131254);
   static const Color slate = Color(0xFF64748B);
   static const Color background = Color(0xFFF6F7FB);
   static const Color card = Color(0xFFFFFFFF);
